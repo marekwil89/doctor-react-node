@@ -16,7 +16,6 @@ mongoose.connect('mongodb://localhost/doctor', {
 import './models/user.js';
 import './models/quiz.js';
 
-console.log('database connection: ' + mongoose.connection.readyState + ' | 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting');
 
 import register from './routes/auth/register.js';
 import login from './routes/auth/login.js';
@@ -37,7 +36,7 @@ app.use(expressSession({
   resave: true,
   saveUninitialized: true
 }));
-// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors({
   origin:['http://localhost:3000'],
@@ -59,11 +58,12 @@ app.use('/quiz/solve', quizSolve);
 
 
 // app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "http://localhost:3001");
-//   res.header("Access-Control-Allow-Credentials",true);
-//   next();
-// });
-
-// npm run server
-
-app.listen('8000', () => console.log('localhost:8000'))
+  //   res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+  //   res.header("Access-Control-Allow-Credentials",true);
+  //   next();
+  // });
+  
+  // npm run server
+  
+  app.listen('8000', () => console.log('localhost:8000'))
+  console.log('database connection: ' + mongoose.connection.readyState + ' | 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting');

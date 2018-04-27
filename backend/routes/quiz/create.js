@@ -4,8 +4,8 @@ const Quiz = mongoose.model('quiz');
 let router = express.Router();
 
 router.post('/', (req, res) => {
- 
-  var newQuiz = new Quiz({
+
+  const newQuiz = new Quiz({
     title: req.body.title,
     category: req.body.category,
     questions: req.body.questions

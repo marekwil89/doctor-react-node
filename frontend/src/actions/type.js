@@ -1,0 +1,3 @@
+export const LOGIN_USER = 'LOGIN_USER';
+export const FETCH_QUIZ_LIST = 'FETCH_QUIZ_LIST';
+export const FETCH_QUIZ_DETAIL = 'FETCH_QUIZ_DETAIL';
