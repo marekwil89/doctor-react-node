@@ -1,40 +1,41 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { fetchQuizList } from '../../actions/quizActions';
+import React from 'react';
 import {
   Link
 } from 'react-router-dom';
+import { Alert } from 'reactstrap';
+import QuizTableItem from './QuizTableItem';
 
-class QuizList extends Component {
-  componentWillMount() {
-    this.props.fetchQuizList();
-  }
-  
-  render() {
-    const quizItems = this.props.quizList.map(quiz => (
-      <li key={quiz._id}>
-        <h3>{quiz.title}</h3>
-        <Link to={`/quiz-solve/${quiz._id}`}>{quiz.title}</Link>
-      </li>
-    ));
+function renderQuizItems(props){
+  if(props.quizList){
+    let quizList = props.quizList;
 
     return (
-      <span className="quiz-list">
-        <ul>
-          {quizItems}
-        </ul>
-      </span>
-    );
+      quizList.length > 0 ? (
+        quizList.map(quiz => (
+          <QuizTableItem key={quiz._id} quiz={quiz} links={props.links}/>
+        ))
+      ) : (
+        props.links === 'solve' ? (
+          <Alert color="danger">
+            Brak rekomendowanych badań
+          </Alert>
+        ) : (
+          <Alert color="danger">
+            Brak rekomendowanych badań, kliknij <Link to="/recommend">tutaj</Link> aby zarekomendować 
+          </Alert>
+          )
+      )
+    )
   }
+  return <p>Loading</p>
 }
 
-QuizList.propTypes = {
-  fetchQuizList: PropTypes.func.isRequired
-};
+const QuizTable = (props) => {
+  return (
+    <span className="quiz-list">
+      {renderQuizItems(props)}
+    </span>
+  );
+}
 
-const mapStateToProps = state => ({
-  quizList: state.quiz.quizList
-});
-
-export default connect(mapStateToProps, { fetchQuizList })(QuizList);
+export default QuizTable;

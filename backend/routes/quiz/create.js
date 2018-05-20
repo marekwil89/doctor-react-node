@@ -11,7 +11,7 @@ router.post('/', (req, res) => {
     questions: req.body.questions
   });
 
-  newQuiz.save(function(err){
+  newQuiz.save((err) => {
     if(err){
         console.log(err)
         return;

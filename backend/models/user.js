@@ -7,22 +7,23 @@ const userSchema = new mongoose.Schema({
   repeatPassword: {type: String},
   created_at: {type: Date, default: Date.now},
   type: {type: String, default: 'doctor'},
+  recommends: {type: Array},
   quizzes: [
       {
         title: {type: String},
         category: {type: String},
+        originalId: {type: String},
         questions: [
           {
           text: {type: String},
           answers: [
             {
-              test: {type: String},
+              text: {type: String},
               selected: {type: Boolean, default: false}
             }
           ]
         }
       ],
-
     }
   ]
 });

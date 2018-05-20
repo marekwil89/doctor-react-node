@@ -1,17 +1,33 @@
-import { LOGIN_USER } from '../actions/type';
+import { SET_USER, UNSET_USER, SET_ERRORS, CLEAR_ERRORS } from '../actions/type';
 
 const initialState = {
-    logedUser: {}
+    user: {},
+    errors: []
 };
 
 export default function(state = initialState, action) {
-    switch (action.type) {
-      case LOGIN_USER:
-        return {
-          ...state,
-          logedUser: action.payload
-        };
-      default:
-        return state;
-    }
+  switch (action.type) {
+    case SET_USER:
+      return {
+        ...state,
+        user: action.payload
+      };
+    case UNSET_USER:
+      return {
+        ...state,
+        user: {}
+      }
+    case SET_ERRORS:
+      return {
+        ...state,
+        errors: action.payload
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        errors: []
+      };
+    default:
+      return state;
+  }
 }

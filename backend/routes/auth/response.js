@@ -10,8 +10,7 @@ let router = express.Router();
 //Authenticate routes
 
 router.get('/alreadyLoged', (req, res) => {
-	console.log('already loged : ' + req.user)
-	return res.send(req.user)
+	return res.send(req.user);
 })
 
 // router.get('/logout', function(req, res){
@@ -23,12 +22,26 @@ router.get('/alreadyLoged', (req, res) => {
 
 router.get('/registerFail', (req, res) => {
 	console.log('register fail');
-	res.send([{msg: 'Ten email już istnieje w bazie', param: 'fail'}])
+	res.send(
+    {
+      param: false,
+      errors: [{
+        msg: 'Ten email już istnieje w bazie'
+      }]
+    }
+  )
 });
 
 router.get('/loginFail', (req, res) => {
 	console.log('login fail');
-	res.send([{msg: 'Zły login lub hasło', param: 'fail'}])
+	res.send(
+    {
+      param: false,
+      errors: [{
+        msg: 'Zly login lub hasło'
+      }]
+    }
+  )
 });	
 
 // router.get('/userList', function(req, res){

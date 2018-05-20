@@ -1,21 +1,21 @@
-import { QUIZ_LIST, QUIZ_DETAIL } from '../actions/type';
+import { USER_LIST, USER_DETAIL } from '../actions/type';
 
 const initialState = {
-    quizList: [],
-    quizDetail: {}
+    userList: [],
+    userDetail: {}
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case QUIZ_LIST:
+    case USER_LIST:
       return {
         ...state,
-        quizList: action.payload
+        userList: action.payload
       };
-    case QUIZ_DETAIL:
+    case USER_DETAIL:
       return {
         ...state,
-        quizDetail: action.payload
+        userDetail: action.payload
       }
     default:
       return state;

@@ -5,21 +5,29 @@ let router = express.Router();
 
 router.post('/', (req, res) => {
 
-	User.findById({_id: req.user.id}, function(err, user){    
+	User.findById({_id: req.user.id},(err, user) => {
     user.quizzes.push({
-      title: req.body.quizDetail.title,
-      category: req.body.quizDetail.category,
-      questions: req.body.quizDetail.questions
+      originalId: req.body._id,
+      title: req.body.title,
+      category: req.body.category,
+      questions: req.body.questions
     });
+
+    var index = user.recommends.indexOf(req.body._id);
+    if (index !== -1) user.recommends.splice(index, 1);
 
 		user.save((err) => {
 			if(err){
 				console.log(err)
 			}
-      res.send('success');
+      res.send(
+        {
+          param: true,
+          message: 'success'
+        }
+      )
 		})
 	})
-
 })
 
 export default router;

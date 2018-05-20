@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "server": "nodemon --watch . --watch backend --watch frontend --exec babel-node -- ./app.js",
+    "start": "nodemon --watch . --watch backend --watch frontend --exec babel-node -- ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

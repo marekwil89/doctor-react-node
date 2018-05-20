@@ -11,7 +11,7 @@ module.exports = function (passport, LocalStrategy) {
 
 	passport.deserializeUser(function (id, done) {
 	  User.findById(id, (err, user) => {
-	  	console.log('deserializing user:',user.email);
+	  	console.log('deserializing user:',user);
 	    done(err, user);
 	  });
 	});
@@ -23,8 +23,7 @@ module.exports = function (passport, LocalStrategy) {
 		},
 		(req ,email, password, done) => { 
 			User.findOne({ 'email' :  email }, function (err, user) {
-				
-				console.log(req.body);
+
 				if (user) {
 					console.log('This mail is already taken');
 					return done(null, false);
@@ -32,9 +31,8 @@ module.exports = function (passport, LocalStrategy) {
 
 				var newUser = new User({
 					email: email,
-					password: bCrypt.createHash(password),
-					// station: req.body.station,
-					// type: 'doctor'
+          password: bCrypt.createHash(password),
+          type: req.body.type,
 				});
         
 				newUser.save((err) => {
@@ -43,7 +41,6 @@ module.exports = function (passport, LocalStrategy) {
 					}
 					return done(null, newUser);
 				});
-
 			});
 		}
 	));
@@ -53,6 +50,7 @@ module.exports = function (passport, LocalStrategy) {
 			passwordField: 'password'
 		},
 		function (email, password, done) { 
+
 			User.findOne({ 'email' :  email }, function(err, user) {
 				if (err){
 					return done(err);

@@ -1,11 +1,37 @@
-import { FETCH_QUIZ_LIST, FETCH_QUIZ_DETAIL } from './type';
+import { QUIZ_LIST, QUIZ_DETAIL } from './type';
 
-export const fetchQuizList = () => dispatch => {
-  fetch('http://localhost:8000/quiz/list')
+export const fetchQuizListOthers = (filters) => dispatch => {
+
+  fetch('http://localhost:8000/quiz/list/others', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify(filters)
+  })
     .then(res => res.json())
     .then(quizList => {
       dispatch({
-        type: FETCH_QUIZ_LIST,
+        type: QUIZ_LIST,
+        payload: quizList
+      })
+    });
+};
+
+export const fetchQuizList = (filters) => dispatch => {
+  fetch('http://localhost:8000/quiz/list', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify(filters)
+  })
+    .then(res => res.json())
+    .then(quizList => {
+      dispatch({
+        type: QUIZ_LIST,
         payload: quizList
       })
     });
@@ -16,8 +42,18 @@ export const fetchQuizDetail = (id) => dispatch => {
     .then(res => res.json())
     .then(quizDetail => {
       dispatch({
-        type: FETCH_QUIZ_DETAIL,
+        type: QUIZ_DETAIL,
         payload: quizDetail
       })
     });
+}
+export const fetchSolvedQuiz = (quiz) => dispatch => {
+  return fetch('http://localhost:8000/quiz/solve', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify(quiz)
+  })
 }

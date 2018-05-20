@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginUser, clearErrors, logedUser, setErrors } from '../../actions/authActions';
-import { Card, CardBody, Button, Form, FormGroup, CardTitle, Label, Input, Col, ListGroup, ListGroupItem } from 'reactstrap';
+import { registerUser, clearErrors, logedUser, setErrors } from '../../actions/authActions';
+import { Card, CardBody, Button, Form, CardTitle, FormGroup, Label, Input, Col, ListGroup, ListGroupItem } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'doctor',
+      email: 'test3',
       password: 'test3',
+      type: 'doctor',
     };
 
     this.onChange = this.onChange.bind(this);
@@ -31,10 +32,11 @@ class LoginForm extends Component {
 
     const user = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
+      type: this.state.type
     };
 
-    this.props.loginUser(user)
+    this.props.registerUser(user)
     .then(res => res.json())
     .then(res => {
       if(res.param === false){
@@ -43,7 +45,7 @@ class LoginForm extends Component {
       else{
         this.props.clearErrors()        
         this.props.logedUser()
-        this.props.history.push('/dashboard')
+        this.props.history.push('/dashboard')        
       }
     });
   }
@@ -63,9 +65,9 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <Card style={{ marginTop: '3rem' }}>
+      <Card  style={{ marginTop: '3rem' }}>
         <CardBody>
-          <CardTitle>Zaloguj się</CardTitle>
+          <CardTitle>Zarejestruj się</CardTitle>
         </CardBody>
         <CardBody>
           <Form onSubmit={this.onSubmit}>
@@ -95,11 +97,24 @@ class LoginForm extends Component {
                 />
               </Col>
             </FormGroup>
+            <FormGroup>
+              <Label for="field-type">Typ konta</Label>
+              <Input 
+                type="select" 
+                name="type"
+                onChange={this.onChange}
+                value={this.state.type}
+                id="field-type"
+              >
+                <option value="doctor">Doctor</option>
+                <option value="user">user</option>
+              </Input>
+            </FormGroup>
             <ListGroup style={{ marginBottom: '1rem' }}>
               {this.renderErrors()}
             </ListGroup>
             <div className="clearfix">
-              <Button className="float-right" style={{ marginTop: '1rem' }} outline color="danger" disabled={!this.state.email || !this.state.password} type="submit">Zaloguj się</Button>
+              <Button className="float-right" style={{ marginTop: '1rem' }} outline color="danger" disabled={!this.state.email || !this.state.password || !this.state.type} type="submit">Zarejestruj się</Button>
             </div>
           </Form>
         </CardBody>
@@ -109,8 +124,7 @@ class LoginForm extends Component {
 }
 
 const mapStateToProps = state => ({
-  errors: state.auth.errors.errors,
-  user: state.auth.user,
+  errors: state.auth.errors.errors
 });
 
-export default withRouter(connect(mapStateToProps, { loginUser, clearErrors, setErrors, logedUser })(LoginForm));
+export default withRouter(connect(mapStateToProps, { registerUser, clearErrors, setErrors, logedUser })(RegisterForm));

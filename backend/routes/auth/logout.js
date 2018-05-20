@@ -4,9 +4,10 @@ var router = express.Router();
 // var mongoose = require('mongoose'); 
 // var User = mongoose.model('User');
 
-router.get('/logout', function(req, res){
+router.post('/', function(req, res){
   req.logOut();
-  res.redirect('/');
+  console.log(req.user);
+	return res.json({msg: 'success'});
 });
 
 module.exports = router;
